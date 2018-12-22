@@ -1,0 +1,8 @@
+*.products
+*.build*
+*.DS_Store
+*backup*
+._*
+_old
+*_dev*
+*.mx2*
