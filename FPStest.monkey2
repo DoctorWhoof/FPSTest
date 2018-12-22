@@ -83,14 +83,13 @@ Class FPSWindow Extends Window
 		controller.horizontalAxis = Axis.X
 		controller.verticalAxis = Axis.Z
 		controller.collidesWith = 1
-		
-		controller.useLocalTransforms = True
 		controller.firstPerson = True
 		controller.firstPersonCamera = _camera
+		'Units are meters per second. Gravity has been adjusted for arcade physics...
+		controller.speed = 6.0
+		controller.jumpSpeed = .25
+		_scene.World.Gravity = New Vec3f( 0, -1.0, 0 )
 		
-		controller.speed = 0.1
-		controller.jumpSpeed = .1
-		_scene.World.Gravity = New Vec3f( 0, -0.35, 0 )
 	End
 	
 	Method OnRender( canvas:Canvas ) Override

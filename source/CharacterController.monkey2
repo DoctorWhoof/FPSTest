@@ -7,12 +7,12 @@ Namespace fpsdemo
 
 Class CharacterController Extends Behaviour
 	
-	Field speed := 1.0		'Units per frame
-	Field jumpSpeed := 0.5
-	Field slopeThreshold := 45.0		'Slopes higher than this angle cause character to slide down
+	Field speed := 1.0					'Meters per second.
+	Field jumpSpeed := 1.0				'Make sure you adjust the Scene.World.Gravity for proper feel.
+	Field slopeThreshold := 45.0		'Slopes higher than this angle cause character to slide down.
 	
 	Field constantSpeed := New Vec3f
-	Field useLocalTransforms := False
+	Field useLocalTransforms := True	'Mojo3D seems inverted? False means true...
 
 	Field horizontalAxis := Axis.X
 	Field verticalAxis := Axis.Y
@@ -92,7 +92,7 @@ Class CharacterController Extends Behaviour
 	'Here's where the movement happens
 	Method OnUpdate( elapsed:Float ) Override
 	
-		Local delta := elapsed / _normalizedDelta
+'		Local delta := elapsed / _normalizedDelta
 		
 		If firstPerson
 			
@@ -121,31 +121,31 @@ Class CharacterController Extends Behaviour
 		End
 		
 		'Horizontal step
+		If constantSpeed.X <> 0.0
+			_isMoving=True
+			LimitedMove( horizontalAxis, constantSpeed.X, elapsed )
+		End
+		
 		If Keyboard.KeyDown( Key.A )
-			LimitedMove( horizontalAxis, -speed, delta )
+			LimitedMove( horizontalAxis, -speed, elapsed )
 			_isMoving=True
 		Else If Keyboard.KeyDown( Key.D )
-			LimitedMove( horizontalAxis, speed, delta )
+			LimitedMove( horizontalAxis, speed, elapsed )
 			_isMoving=True
 		Endif
 		
-		If constantSpeed.X <> 0.0
-			_isMoving=True
-			LimitedMove( horizontalAxis, constantSpeed.X, delta )
-		End
-		
 		If verticalAxis = Axis.Z
 			If Keyboard.KeyDown( Key.W )
-				LimitedMove( verticalAxis, speed, delta )
+				LimitedMove( verticalAxis, speed, elapsed )
 				_isMoving=True
 			Else If Keyboard.KeyDown( Key.S )
-				LimitedMove( verticalAxis, -speed, delta )
+				LimitedMove( verticalAxis, -speed, elapsed )
 				_isMoving=True
 			Endif
 			
 			If constantSpeed.Z <> 0.0
 				_isMoving=True
-				LimitedMove( verticalAxis, constantSpeed.Z, delta )
+				LimitedMove( verticalAxis, constantSpeed.Z, elapsed )
 			End
 		End
 		
@@ -160,17 +160,17 @@ Class CharacterController Extends Behaviour
 		'Y step
 		If verticalAxis = Axis.Y
 			If Keyboard.KeyDown( Key.W )
-				LimitedMove( verticalAxis, speed, delta )
+				LimitedMove( verticalAxis, speed, elapsed )
 				_isMoving=True
 			Else If Keyboard.KeyDown( Key.S )
-				LimitedMove( verticalAxis, -speed, delta )
+				LimitedMove( verticalAxis, -speed, elapsed )
 				_isMoving=True
 			Endif
 		End
 		
 		If constantSpeed.Y <> 0.0
 			_isMoving=True
-			LimitedMove( verticalAxis, constantSpeed.Y, delta )
+			LimitedMove( verticalAxis, constantSpeed.Y, elapsed )
 		End
 		
 		'Gravity
@@ -308,10 +308,10 @@ Class CharacterController Extends Behaviour
 	
 	Protected
 	
-	Method LimitedMove( axis:Axis, amount:Float, delta:Float )
-		If axis = Axis.X And Not lockXMovement Then Entity.MoveX( amount * delta, Not useLocalTransforms )
-		If axis = Axis.Y And Not lockYMovement Then Entity.MoveY( amount * delta, Not useLocalTransforms )
-		If axis = Axis.Z And Not lockZMovement Then Entity.MoveZ( amount * delta, Not useLocalTransforms )
+	Method LimitedMove( axis:Axis, amount:Float, elapsed:Float )
+		If axis = Axis.X And Not lockXMovement Then Entity.MoveX( amount * elapsed, Not useLocalTransforms )
+		If axis = Axis.Y And Not lockYMovement Then Entity.MoveY( amount * elapsed, Not useLocalTransforms )
+		If axis = Axis.Z And Not lockZMovement Then Entity.MoveZ( amount * elapsed, Not useLocalTransforms )
 	End
 	
 	Method LimitedMove( goal:Vec3f )
