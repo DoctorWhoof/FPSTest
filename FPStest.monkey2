@@ -97,7 +97,9 @@ Class FPSWindow Extends Window
 		RequestRender()
 		_scene.Update()
 		_camera.Render( canvas )
-		canvas.DrawText( "FPS="+App.FPS,0,0 )
+		canvas.Color = Color.Black
+		canvas.DrawText( "Click to capture mouse, escape to release it. WASD keys to walk, space bar to jump",0,0 )
+		canvas.DrawText( "FPS="+App.FPS,0,20 )
 	End
 	
 End
