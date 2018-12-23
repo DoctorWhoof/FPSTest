@@ -32,7 +32,7 @@ Class FPSWindow Extends Window
 	Method OnCreateWindow() Override
 		_scene = New Scene
 		_scene.ClearColor = New Color( 0.3, 0.5, 0.9 )
-		_scene.EnvTexture = Texture.Load("asset::textures/white_cliff_top_4k.jpg", TextureFlags.FilterMipmap | TextureFlags.Cubemap )
+		_scene.EnvTexture = Texture.Load("asset::textures/white_cliff_top_4k.jpg", TextureFlags.FilterMipmap|TextureFlags.Cubemap|TextureFlags.Envmap )
 		_scene.SkyTexture = _scene.EnvTexture
 		_scene.AmbientLight = New Color( 0.2, 0.3, 0.4 )
 		
