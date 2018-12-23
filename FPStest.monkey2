@@ -14,7 +14,7 @@ Using std..
 Using m2extensions..
 
 Function Main()
-	SetConfig( "MOJO3D_RENDERER","forward" )
+'	SetConfig( "MOJO3D_RENDERER","forward" )
 	New AppInstance
 	New FPSWindow( 1280, 720 )
 	App.Run()
@@ -32,10 +32,19 @@ Class FPSWindow Extends Window
 	Method OnCreateWindow() Override
 		_scene = New Scene
 		_scene.ClearColor = New Color( 0.3, 0.5, 0.9 )
-		_scene.EnvTexture = Texture.Load("asset::white_cliff_top_4k.jpg", TextureFlags.FilterMipmap | TextureFlags.Cubemap )
+		_scene.EnvTexture = Texture.Load("asset::textures/white_cliff_top_4k.jpg", TextureFlags.FilterMipmap | TextureFlags.Cubemap )
 		_scene.SkyTexture = _scene.EnvTexture
 		_scene.AmbientLight = New Color( 0.2, 0.3, 0.4 )
-	
+		
+		Local env := Model.Load( "asset::models/test_env1.gltf")
+		For Local e := Eachin _scene.GetRootEntities()
+			Local m := Cast<Model>( e )
+			If m
+				m.CreateCollisionMesh( 1 )
+			End
+		Next
+		
+		'single light source
 		Local light := New Light
 		light.Rotate(15,-50,0)
 		light.Color = New Color( 1.25, 1.1, 1.0 )
@@ -50,15 +59,7 @@ Class FPSWindow Extends Window
 		_scene.AddPostEffect( rays )
 		_scene.AddPostEffect( New FXAAEffect )
 		
-		
-		Local env := Model.Load( "asset::test_env1.gltf")
-		For Local e := Eachin _scene.GetRootEntities()
-			Local m := Cast<Model>( e )
-			If m
-				m.CreateCollisionMesh( 1 )
-			End
-		Next
-		
+		'hero entity. The camera is parented to it.
 		Local hero := New Pivot
 		hero.Name = "Hero"
 		hero.X = 0
@@ -85,6 +86,7 @@ Class FPSWindow Extends Window
 		controller.collidesWith = 1
 		controller.firstPerson = True
 		controller.firstPersonCamera = _camera
+		
 		'Units are meters per second. Gravity has been adjusted for arcade physics...
 		controller.speed = 6.0
 		controller.jumpSpeed = .25

@@ -91,11 +91,8 @@ Class CharacterController Extends Behaviour
 	
 	'Here's where the movement happens
 	Method OnUpdate( elapsed:Float ) Override
-	
-'		Local delta := elapsed / _normalizedDelta
 		
 		If firstPerson
-			
 			'De-initializes mouselook if escape is pressed
 			If Keyboard.KeyHit( Key.Escape )
 				_prevMouse = Null
@@ -111,13 +108,12 @@ Class CharacterController Extends Behaviour
 					firstPersonCamera.RotateX( deltaX )
 				End
 			Else
-				'initializes _prevMouse only if mouse is clicked
+				'initializes _prevMouse only if mouse is clicked and _prevMouse is null
 				If Mouse.ButtonHit( MouseButton.Left )
 					_prevMouse = New Vec2f( Float( Mouse.X ), Float( Mouse.Y ) )
 					Mouse.PointerVisible = False
 				End
 			End
-			
 		End
 		
 		'Horizontal step
