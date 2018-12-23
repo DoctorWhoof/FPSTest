@@ -186,7 +186,7 @@ Class CharacterController Extends Behaviour
 			_grav= jumpSpeed
 		Endif
 		
-		Entity.Move( Axis.Y, _grav )
+		Entity.Move( Axis.Y, _grav * elapsed )
 		
 		If _col
 			_yResult = QCollide( _step1, Entity.Position )

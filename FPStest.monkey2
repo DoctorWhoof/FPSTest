@@ -36,6 +36,8 @@ Class FPSWindow Extends Window
 		_scene.SkyTexture = _scene.EnvTexture
 		_scene.AmbientLight = New Color( 0.2, 0.3, 0.4 )
 		
+'		SwapInterval = 0
+		
 		Local env := Model.Load( "asset::models/test_env1.gltf")
 		For Local e := Eachin _scene.GetRootEntities()
 			Local m := Cast<Model>( e )
@@ -89,8 +91,9 @@ Class FPSWindow Extends Window
 		
 		'Units are meters per second. Gravity has been adjusted for arcade physics...
 		controller.speed = 6.0
-		controller.jumpSpeed = .25
-		_scene.World.Gravity = New Vec3f( 0, -1.0, 0 )
+		controller.jumpSpeed = 6.0
+		Print _scene.World.Gravity
+		_scene.World.Gravity = New Vec3f( 0, -20.0, 0 )
 		
 	End
 	
