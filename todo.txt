@@ -1,0 +1,14 @@
+TO DO: Code:
+Blend Material (mask based).
+Fly camera.
+Reset position.
+
+TO DO: Art:
+BLOCK EVERYTHING BEFORE ADDING DETAIL!
+Castle ruins! Lots of scattered geometry, props, doors, windows, flag poles, etc. Look for reference.
+New architecture: walls, bridge, more spectacular castle ruins.
+New material areas: roads, castle grounds around walls with dead grass.
+Playtest geometry: Ramps, ladders, stairs.
+
+Intensify global amb occlusion in Painter.
+Add extra detail in heightmap (normals still blurry).
